@@ -1,3 +1,8 @@
+//• Shanell Chavez
+//• CSC 2025.X42 (CRN: 12625) 
+//• Instructor: Pam Phillips
+//• 6/14/2025
+
 
 INCLUDE C : \Irvine\Irvine32.inc
 INCLUDELIB C : \Irvine\Irvine32.lib
@@ -117,10 +122,6 @@ call StrToInt              //; string to integer
 
 ret
 ReadNumInput ENDP
-
-
-
-
 
 
 
