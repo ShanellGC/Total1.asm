@@ -8,6 +8,7 @@ INCLUDE C : \Irvine\Irvine32.inc
 INCLUDELIB C : \Irvine\Irvine32.lib
 
 .data
+
 seconds DWORD ?
 
 minutes DWORD ?
@@ -41,55 +42,52 @@ outputDisplay BYTE " The number of seconds you entered is %d.", 13, 10,         
 
 " The total number of seconds is %d.", 13, 10,
 
-" The total number of seconds is %d.", 13, 10,
 
 startOver BYTE "Would you like to start over (Y/N) ? " 0
 
 
 
 .code
+
 main PROC
 
 
 call ReadNumInput                      //; ask the user to enter hours
 
-mov hours, EAX                         //; Store user input for hours
+mov hours, eax                        //; Store user input for hours
 
 
 call ReadNumInput                    //ask the user to enter minutes
 
-mov minutes, EAX                        //Store user input for minutes
-
+mov minutes, eax                        //Store user input for minutes
 
 
 call ReadNumInput                        //ask the user to enter seconds
 
-
-mov seconds, EAX                          // Store user input for seconds
-
-
-mov EAX, hours                          //Compute total seconds
+mov seconds, eax                         // Store user input for seconds
 
 
-imul EAX, 3600                         //;Convert hours to seconds                
+mov eax, hours                          //Compute total seconds
 
-mov totalSeconds, EAX
+imul eax, 3600                         //Convert hours to seconds             
 
-mov EAX, minutes
+mov totalSeconds, eax
 
-imul EAX, 60                               //;minutes to seconds
+mov eax, minutes
+
+imul eax, 60                               //;minutes to seconds
 
 
-add totalSeconds, EAX
+add totalSeconds, eax
 
 add totalSeconds, seconds                   //; Add seconds to total count
 
 
-mov EAX, totalSeconds                          //; total minutes
+mov eax, totalSeconds                          //; total minutes
 
-mov EDX, 60
+mov edx, 60
 
-div EDX                                //; Convert total seconds into minutes
+div edx                                //; Convert total seconds into minutes
 
 mov totalMinutes, eax
 
