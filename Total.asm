@@ -8,35 +8,32 @@ INCLUDE C : \Irvine\Irvine32.inc
 INCLUDELIB C : \Irvine\Irvine32.lib
 
 .data
-//declare variables here
-//declare arrays here
-
 seconds DWORD ?
 
 minutes DWORD ?
 
 hours DWORD ?
 
-totalSec DWORD ?
+totalSeconds DWORD ?
 
-totalMin DWORD ?
+totalMinutes DWORD ?
 
-buffer BYTE 10 DUP(0)  //input storing; strings here
-
-
-numberSeconds BYTE "PLease enter the number of seconds: ", 0   //; messages display for sec,
-
-numberMinutes BYTE "PLease enter the number of minutes: ", 0    //; messages display for min,
-
-numberHours BYTE "PLease enter the number of hours: ", 0       //; messages display for hrs.
+buffer BYTE 10 DUP(0)                                                    //; input storing strings
 
 
-inputInvalid BYTE "Inncorrect input please enter a number value ", 0 //; messages display for invalid input
+numberSeconds BYTE "PLease enter the number of seconds: ", 0                // ; messages display for sec,
+
+numberMinutes BYTE "PLease enter the number of minutes: ", 0               // ; messages display for min,
+
+numberHours BYTE "PLease enter the number of hours: ", 0                       //; messages display for hrs.
 
 
-//; declare strings here - output
+inputInvalid BYTE "Incorrect input please enter a number value ", 0            // ; messages display for invalid input
 
-outputDisplay BYTE " The number of seconds you entered is %d.", 13, 10,
+
+
+
+outputDisplay BYTE " The number of seconds you entered is %d.", 13, 10,          //; declare strings - output
 
 " The number of minutes you entered is %d.", 13, 10,
 
@@ -50,67 +47,70 @@ startOver BYTE "Would you like to start over (Y/N) ? " 0
 
 
 
-
 .code
 main PROC
 
 
-call ReadNumInput     //; ask the user to enter hours
+call ReadNumInput                      //; ask the user to enter hours
 
-mov hours, eax        //; Store user input for hours
-
-
-call ReadNumInput     //; ask the user to enter minutes
-
-mov minutes, eax         //; Store user input for minutes
+mov hours, EAX                         //; Store user input for hours
 
 
-call ReadNumInput        //; ask the user to enter seconds
+call ReadNumInput                    //ask the user to enter minutes
+
+mov minutes, EAX                        //Store user input for minutes
 
 
-mov seconds, eax            //; Store user input for seconds
+
+call ReadNumInput                        //ask the user to enter seconds
 
 
-mov eax, hours           //; Compute total seconds
+mov seconds, EAX                          // Store user input for seconds
 
 
-imul eax, 3600           //; Convert hours to seconds
-
-mov totalSeconds, eax
-
-mov eax, minutes
-
-imul eax, 60   //minutes to seconds
+mov EAX, hours                          //Compute total seconds
 
 
-add totalSeconds, eax
+imul EAX, 3600                         //;Convert hours to seconds                
 
-add totalSeconds, seconds         //; Add seconds to total count
+mov totalSeconds, EAX
+
+mov EAX, minutes
+
+imul EAX, 60                               //;minutes to seconds
 
 
-mov eax, totalSeconds      //; total minutes
+add totalSeconds, EAX
 
-mov edx, 60
+add totalSeconds, seconds                   //; Add seconds to total count
 
-div edx             //; Convert total seconds into minutes
+
+mov EAX, totalSeconds                          //; total minutes
+
+mov EDX, 60
+
+div EDX                                //; Convert total seconds into minutes
 
 mov totalMinutes, eax
 
 
-printf outputFormat, hours, minutes, seconds, totalMinutes, totalSeconds  //; Output the results
+printf outputDisplay, hours, minutes, seconds, totalMinutes, totalSeconds                       //; Output the results
 
 
-mov edx, OFFSET startOver         //; Ask the user if they want to repeat the program
+mov edx, OFFSET startOver                                  //; Ask the user if they want to repeat the program
 call WriteString
+
 call ReadChar
 
-cmp al, 'y'; Check if user entered 'y'
-je main                                  //; Restart the program if yes
+cmp al, 'y'                                    //; Check if user entered 'y'
 
-exit                                 //; Exit program if no
+je main                                       //; Restart the program if yes
+
+INVOKE ExitProcess, 0                                       //; Exit program if no
+
 main ENDP
 
-ReadNumInput PROC                //; Read string input from user
+ReadNumInput PROC                            //; Read string input from user
 
 call ReadString
 
@@ -118,15 +118,9 @@ call ReadString
 mov esi, OFFSET buffer
 
 
-call StrToInt              //; string to integer
+call StrToInt                                  //; string to integer
 
 ret
 ReadNumInput ENDP
 
-
-
-INVOKE ExitProcess, 0
-
-main ENDP
-
-END main
+END main 
